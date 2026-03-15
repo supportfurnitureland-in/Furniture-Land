@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Furniture Land</title>
+
+<style>
+body{
+font-family:Arial;
+margin:0;
+background:#f5f5f5;
+}
+
+header{
+background:#6b4f3b;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+.products{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+padding:20px;
+gap:15px;
+}
+
+.card{
+background:white;
+width:200px;
+padding:10px;
+box-shadow:0 0 5px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+button{
+padding:8px;
+background:#6b4f3b;
+color:white;
+border:none;
+margin-top:5px;
+}
+
+.admin{
+background:#eee;
+padding:20px;
+margin:20px;
+}
+
+footer{
+background:#333;
+color:white;
+text-align:center;
+padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Furniture Land</h1>
+<p>Quality Furniture | Home Delivery Available</p>
+</header>
+
+<div class="products" id="productList"></div>
+
+<div class="admin">
+<h2>Admin Panel</h2>
+
+<input id="name" placeholder="Product Name"><br><br>
+<input id="price" placeholder="Price"><br><br>
+<input id="image" placeholder="Image URL"><br><br>
+
+<button onclick="addProduct()">Add Product</button>
+
+</div>
+
+<footer>
+<p>Home Delivery Available</p>
+<p>Payment: Online / Cash on Delivery</p>
+<p>Support: +91 XXXXX XXXXX</p>
+</footer>
+
+<script>
+
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+function showProducts(){
+let list = document.getElementById("productList");
+list.innerHTML="";
+
+products.forEach((p,i)=>{
+
+list.innerHTML += `
+<div class="card">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+
+<button onclick="order('${p.name}')">Order</button>
+
+</div>
+`;
+
+});
+
+}
+
+function addProduct(){
+
+let name = document.getElementById("name").value;
+let price = document.getElementById("price").value;
+let image = document.getElementById("image").value;
+
+products.push({name,price,image});
+
+localStorage.setItem("products",JSON.stringify(products));
+
+showProducts();
+
+}
+
+function order(name){
+
+alert("Order placed for "+name+"\nPayment: Online or Cash on Delivery\nHome Delivery Available");
+
+}
+
+showProducts();
+
+</script>
+
+</body>
+</html>
